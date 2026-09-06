@@ -1,0 +1,782 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>JONANホールディングス 業績＆活動ダッシュボード</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --jonan-navy:#1f4a73;
+    --jonan-navy-deep:#0f2c47;
+    --jonan-sky:#6fa8d6;
+    --paper:#f3f6fb;
+    --ink:#161f2b;
+    --slate:#5b6b7c;
+
+    --bg:var(--paper);
+    --surface:#ffffff;
+    --surface-2:#eaf0f7;
+    --border:#d7e0ea;
+    --text:var(--ink);
+    --text-muted:var(--slate);
+    --accent:var(--jonan-navy);
+    --accent-strong:var(--jonan-navy-deep);
+    --accent-soft:#e4edf7;
+    --accent-on:#ffffff;
+
+    --ok-bg:#e4f3ea; --ok-fg:#1f7a4a; --ok-bd:#bfe3cd;
+    --warn-bg:#fbf1de; --warn-fg:#96650f; --warn-bd:#f0dbab;
+    --block-bg:#fbe8e8; --block-fg:#a5393c; --block-bd:#f0c6c7;
+    --neutral-bg:#eef0f3; --neutral-fg:#5b6b7c; --neutral-bd:#dde2e8;
+
+    --font-display:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;
+    --font-body:'Noto Sans JP','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;
+  }
+  /* Light appearance is the default regardless of system/browser theme.
+     Dark only applies when the host explicitly stamps data-theme="dark". */
+  :root[data-theme="dark"]{
+    --bg:#0c1620;
+    --surface:#121f2d;
+    --surface-2:#182838;
+    --border:#25384a;
+    --text:#e7edf4;
+    --text-muted:#93a5b8;
+    --accent:#7fb2e0;
+    --accent-strong:#a9cdef;
+    --accent-soft:#1a3247;
+    --accent-on:#0c1620;
+
+    --ok-bg:#123423; --ok-fg:#7fd6a4; --ok-bd:#1f5138;
+    --warn-bg:#3a2c10; --warn-fg:#f0c876; --warn-bd:#5c481c;
+    --block-bg:#3a1719; --block-fg:#f2999b; --block-bd:#5c2528;
+    --neutral-bg:#1c2733; --neutral-fg:#9aabbd; --neutral-bd:#2b3a48;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:15px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:var(--font-display); text-wrap:balance; margin:0; }
+  a{ color:var(--accent-strong); }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px 80px; }
+
+  header.top{
+    background:linear-gradient(135deg,var(--accent-strong) 0%, var(--accent) 62%, var(--jonan-sky) 100%);
+    color:#fff;
+    padding:40px 24px 32px;
+    margin-bottom:40px;
+  }
+  header.top .wrap{ padding:0; display:flex; flex-direction:column; gap:10px; }
+  .eyebrow{
+    font-size:12.5px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; opacity:.85;
+  }
+  header.top h1{ font-size:clamp(30px,5vw,44px); font-weight:900; color:#fff; letter-spacing:.01em; }
+  .dash-title{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(16px,2.2vw,20px);
+    color:#fff; opacity:.94; margin-top:-2px;
+  }
+  .subtitle{color:var(--ink-muted);font-size:13.5px;max-width:46ch;}
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap:10px 20px; font-size:13px; opacity:.92; margin-top:10px;
+  }
+  .meta-row span{ display:inline-flex; align-items:center; gap:6px; }
+
+  section{ margin-bottom:56px; }
+  .section-head{ margin-bottom:20px; }
+  .section-head .num{
+    font-family:var(--font-display); font-weight:900; font-size:13px;
+    color:var(--accent); letter-spacing:.06em;
+  }
+  .section-head h2{ font-size:22px; font-weight:700; margin-top:4px; }
+  .section-head p{ color:var(--text-muted); font-size:13.5px; margin:6px 0 0; max-width:62ch; }
+
+  /* KPI tiles */
+  .kpi-row{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:14px; margin-bottom:24px;
+  }
+  .kpi{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:16px 18px;
+  }
+  .kpi .label{ font-size:12px; color:var(--text-muted); font-weight:500; }
+  .kpi .value{
+    font-family:var(--font-display); font-weight:900; font-size:26px; color:var(--accent);
+    margin-top:4px; font-variant-numeric:tabular-nums;
+  }
+  .kpi .sub{ font-size:11.5px; color:var(--text-muted); margin-top:2px; }
+
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:22px 24px;
+  }
+  .card + .card{ margin-top:16px; }
+  .card h3{ font-size:15.5px; font-weight:700; margin-bottom:14px; }
+
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  th,td{ text-align:left; padding:9px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  th{ color:var(--text-muted); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.03em; }
+  tr:last-child td{ border-bottom:none; }
+  .tbl-wrap{ overflow-x:auto; }
+  td.num{ font-variant-numeric:tabular-nums; white-space:nowrap; }
+
+  .badge{
+    display:inline-flex; align-items:center; gap:5px; padding:3px 9px;
+    border-radius:999px; font-size:11.5px; font-weight:700; white-space:nowrap;
+    border:1px solid transparent;
+  }
+  .badge.ok{ background:var(--ok-bg); color:var(--ok-fg); border-color:var(--ok-bd); }
+  .badge.warn{ background:var(--warn-bg); color:var(--warn-fg); border-color:var(--warn-bd); }
+  .badge.block{ background:var(--block-bg); color:var(--block-fg); border-color:var(--block-bd); }
+  .badge.neutral{ background:var(--neutral-bg); color:var(--neutral-fg); border-color:var(--neutral-bd); }
+
+  /* stepper */
+  .stepper{ display:flex; flex-wrap:wrap; gap:0; margin-top:6px; }
+  .step{
+    flex:1 1 130px; position:relative; padding:14px 14px 14px 0; min-width:130px;
+  }
+  .step::before{
+    content:''; position:absolute; top:11px; left:0; right:-2px; height:2px; background:var(--border);
+  }
+  .step:first-child::before{ left:0; }
+  .step.done::before{ background:var(--ok-fg); }
+  .step-dot{
+    width:22px; height:22px; border-radius:50%; background:var(--surface-2); border:2px solid var(--border);
+    display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--text-muted);
+    position:relative; z-index:1; margin-bottom:8px; font-variant-numeric:tabular-nums;
+  }
+  .step.done .step-dot{ background:var(--ok-fg); border-color:var(--ok-fg); color:#fff; }
+  .step.active .step-dot{ background:var(--accent); border-color:var(--accent); color:var(--accent-on); }
+  .step-label{ font-size:12.5px; font-weight:700; }
+  .step-date{ font-size:11px; color:var(--text-muted); margin-top:2px; }
+
+  /* org chart */
+  .orgchart-fig{ margin:0; }
+  .orgchart-fig svg{ display:block; width:100%; height:auto; }
+  .orgchart-fig svg rect{ fill:var(--surface); stroke:var(--border); }
+  .orgchart-fig svg rect.node-lead{ fill:var(--accent); stroke:var(--accent-strong); }
+  .orgchart-fig svg rect.node-audit{ fill:var(--surface); stroke:var(--text-muted); stroke-dasharray:5 4; }
+  .orgchart-fig svg line,
+  .orgchart-fig svg polygon.arrow{ stroke:var(--text-muted); fill:var(--text-muted); }
+  .orgchart-fig svg text{ fill:var(--text); font-family:var(--font-body); }
+  .orgchart-fig svg text.lead{ fill:var(--accent-on); }
+  .orgchart-fig svg text.title{ font-weight:700; }
+  .orgchart-fig svg text.note{ fill:var(--text-muted); font-size:11px; }
+  figcaption{ font-size:12px; color:var(--text-muted); margin-top:10px; }
+
+  .dept-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:18px;
+  }
+  .dept-card{
+    background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:14px 16px;
+  }
+  .dept-card h4{ font-size:13.5px; font-weight:700; margin:0 0 6px; font-family:var(--font-display); }
+  .dept-card p{ font-size:12.5px; color:var(--text-muted); margin:0; }
+
+  /* project groups */
+  .pj-group{ margin-bottom:18px; }
+  .pj-group h3{
+    font-size:13px; font-weight:700; color:var(--text-muted); text-transform:uppercase;
+    letter-spacing:.04em; margin-bottom:10px; display:flex; align-items:center; gap:8px;
+  }
+  .pj-list{ display:flex; flex-direction:column; gap:10px; }
+  .pj-item{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:14px 16px; display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
+  }
+  .pj-item .left{ flex:1; min-width:0; }
+  .pj-item .title{ font-weight:700; font-size:14px; }
+  .pj-item .desc{ font-size:12.5px; color:var(--text-muted); margin-top:4px; }
+  .pj-item .right{ flex-shrink:0; text-align:right; }
+  .pj-item .when{ font-size:11.5px; color:var(--text-muted); margin-top:6px; }
+
+  .note-box{
+    background:var(--accent-soft); border:1px solid var(--border); border-radius:10px;
+    padding:16px 18px; font-size:12.5px; color:var(--text);
+  }
+  .note-box strong{ color:var(--accent-strong); }
+
+  /* BS/PL breakdown bars */
+  .bs-cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:24px; margin-top:6px; }
+  .bs-col h4{
+    font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase;
+    letter-spacing:.03em; margin:0 0 4px;
+  }
+  .bs-col .col-total{
+    font-family:var(--font-display); font-weight:900; font-size:19px; color:var(--accent);
+    margin-bottom:12px; font-variant-numeric:tabular-nums;
+  }
+  .breakdown{ display:flex; flex-direction:column; gap:10px; }
+  .breakdown-row{ display:grid; grid-template-columns:1fr; gap:4px; font-size:12.5px; }
+  .breakdown-row .br-top{ display:flex; justify-content:space-between; gap:10px; }
+  .breakdown-row .br-name{ color:var(--text); }
+  .breakdown-row .br-amt{ font-variant-numeric:tabular-nums; color:var(--text-muted); white-space:nowrap; }
+  .breakdown-row .track{ background:var(--surface-2); border-radius:6px; height:9px; overflow:hidden; }
+  .breakdown-row .fill{ height:100%; background:var(--accent); border-radius:6px; }
+
+  /* PL flow */
+  .flow{ display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; margin-top:16px; }
+  .flow-step{
+    flex:1 1 130px; border-radius:10px; padding:12px 14px; border:1px solid var(--border);
+    background:var(--surface-2);
+  }
+  .flow-step .fs-label{ font-size:11px; color:var(--text-muted); }
+  .flow-step .fs-val{
+    font-family:var(--font-display); font-weight:900; font-size:16.5px; margin-top:4px;
+    font-variant-numeric:tabular-nums; color:var(--text);
+  }
+  .flow-step.ok{ background:var(--ok-bg); border-color:var(--ok-bd); }
+  .flow-step.ok .fs-val{ color:var(--ok-fg); }
+  .flow-step.block{ background:var(--block-bg); border-color:var(--block-bd); }
+  .flow-step.block .fs-val{ color:var(--block-fg); }
+  .flow-step.lead{ background:var(--accent-soft); border-color:var(--accent); }
+  .flow-step.lead .fs-val{ color:var(--accent-strong); }
+  .flow-op{
+    display:flex; align-items:center; justify-content:center; font-weight:700;
+    color:var(--text-muted); font-size:16px; flex:0 0 auto; padding:0 2px;
+  }
+
+  footer.page{
+    border-top:1px solid var(--border); padding-top:24px; margin-top:8px;
+    font-size:12px; color:var(--text-muted);
+  }
+  footer.page ul{ margin:8px 0 0; padding-left:18px; }
+  footer.page li{ margin-bottom:4px; }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <span class="eyebrow">株式会社・高校生経営</span>
+    <h1>JONANホールディングス</h1>
+    <div class="dash-title">業績＆活動ダッシュボード</div>
+    <div class="meta-row">
+      <span>更新日:2026年9月5日</span>
+      <span>作成:横山弘毅</span>
+      <span>状態:業務整理中・現在進行中の項目のみ掲載</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="finance-summary">
+    <div class="section-head">
+      <div class="num">01 / 業績管理</div>
+      <h2>経常利益 +355,574円 ― 収支サマリー</h2>
+      <p>2026年6月22日時点の残高試算表(2025年度・決算仕訳)による、営業収支・営業外収支・経常利益のサマリー(1/22時点から更新)。詳細な財務状況は次の項目を参照。</p>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="label">営業収入(売上高)</div>
+        <div class="value">140,240円</div>
+        <div class="sub">2025年度・初めて計上</div>
+      </div>
+      <div class="kpi">
+        <div class="label">営業支出(売上原価+販管費)</div>
+        <div class="value">212,809円</div>
+        <div class="sub">売上原価21,258円+販管費191,551円</div>
+      </div>
+      <div class="kpi">
+        <div class="label">営業損益</div>
+        <div class="value" style="color:var(--block-fg);">▲72,569円</div>
+        <div class="sub">赤字幅が拡大(1/22時点:▲12,987円)</div>
+      </div>
+      <div class="kpi">
+        <div class="label">営業外収入</div>
+        <div class="value">428,143円</div>
+        <div class="sub">寄付金収入428,000円+受取利息143円</div>
+      </div>
+      <div class="kpi">
+        <div class="label">営業外支出</div>
+        <div class="value">0円</div>
+        <div class="sub">計上なし</div>
+      </div>
+      <div class="kpi">
+        <div class="label">営業外損益</div>
+        <div class="value" style="color:var(--ok-fg);">+428,143円</div>
+        <div class="sub">寄付金による黒字</div>
+      </div>
+      <div class="kpi">
+        <div class="label">経常利益</div>
+        <div class="value" style="color:var(--ok-fg);">+355,574円</div>
+        <div class="sub">営業損益+営業外損益</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>販売管理費 内訳(合計 191,551円)</h3>
+      <div class="breakdown" style="max-width:520px;">
+        <div class="breakdown-row">
+          <div class="br-top"><span class="br-name">営業推進費 <span class="badge warn">新規科目</span></span><span class="br-amt">87,264円</span></div>
+          <div class="track"><div class="fill" style="width:45.6%"></div></div>
+        </div>
+        <div class="breakdown-row">
+          <div class="br-top"><span class="br-name">消耗品費</span><span class="br-amt">86,937円</span></div>
+          <div class="track"><div class="fill" style="width:45.4%"></div></div>
+        </div>
+        <div class="breakdown-row">
+          <div class="br-top"><span class="br-name">広告宣伝費</span><span class="br-amt">10,560円</span></div>
+          <div class="track"><div class="fill" style="width:5.5%"></div></div>
+        </div>
+        <div class="breakdown-row">
+          <div class="br-top"><span class="br-name">支払手数料</span><span class="br-amt">6,470円</span></div>
+          <div class="track"><div class="fill" style="width:3.4%"></div></div>
+        </div>
+        <div class="breakdown-row">
+          <div class="br-top"><span class="br-name">租税公課</span><span class="br-amt">200円</span></div>
+          <div class="track"><div class="fill" style="width:0.1%"></div></div>
+        </div>
+        <div class="breakdown-row">
+          <div class="br-top"><span class="br-name">通信費</span><span class="br-amt">120円</span></div>
+          <div class="track"><div class="fill" style="width:0.1%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:16px;">
+      <strong>読み方の注意(6/22版・1/22版からの変化):</strong>
+      売上高が0円→140,240円に計上され、事業収益が初めて発生した。ただし販売管理費も12,987円→191,551円に急増しており、特に「営業推進費87,264円」は1/22時点になかった新しい科目で内容が未確認。本業の営業損益はむしろ▲12,987円→▲72,569円と赤字が拡大しており、経常利益+355,574円の黒字は引き続き寄付金収入(42.8万円)が主因。
+      本表は2026年6月22日処理の残高試算表(2025年度・決算仕訳)であり、9/30期限の正式な決算とは別。確定額は決算書の到着後に更新する。
+    </div>
+  </section>
+
+  <section id="finance">
+    <div class="section-head">
+      <div class="num">02 / 財務状況</div>
+      <h2>現時点の財務状況(残高試算表)・決算進捗</h2>
+      <p>貸借対照表(BS)の内訳と、決算・株主総会の進み具合をまとめている。受注実績・進行中の売上案件は「03 / プロジェクト管理」に統合。</p>
+    </div>
+
+    <div class="card">
+      <h3>現時点の財務状況(残高試算表 2026年6月22日時点)</h3>
+      <div class="kpi-row" style="margin-bottom:22px;">
+        <div class="kpi">
+          <div class="label">現金・預金</div>
+          <div class="value">53.0万円</div>
+          <div class="sub">普通預金 530,091円</div>
+        </div>
+        <div class="kpi">
+          <div class="label">資産合計</div>
+          <div class="value">55.3万円</div>
+          <div class="sub">553,391円</div>
+        </div>
+        <div class="kpi">
+          <div class="label">純資産(資本合計)</div>
+          <div class="value">45.6万円</div>
+          <div class="sub">455,574円</div>
+        </div>
+        <div class="kpi">
+          <div class="label">経常利益</div>
+          <div class="value" style="color:var(--ok-fg);">+35.6万円</div>
+          <div class="sub">355,574円</div>
+        </div>
+      </div>
+
+      <div class="bs-cols">
+        <div class="bs-col">
+          <h4>資産の部</h4>
+          <div class="col-total">553,391円</div>
+          <div class="breakdown">
+            <div class="breakdown-row">
+              <div class="br-top"><span class="br-name">現金・預金(普通預金)</span><span class="br-amt">530,091円・95.8%</span></div>
+              <div class="track"><div class="fill" style="width:95.8%"></div></div>
+            </div>
+            <div class="breakdown-row">
+              <div class="br-top"><span class="br-name">売上債権(未収金)</span><span class="br-amt">23,300円・4.2%</span></div>
+              <div class="track"><div class="fill" style="width:4.2%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="bs-col">
+          <h4>負債・資本の部</h4>
+          <div class="col-total">553,391円</div>
+          <div class="breakdown">
+            <div class="breakdown-row">
+              <div class="br-top"><span class="br-name">負債(未払費用86,530円+役員借入金11,287円)</span><span class="br-amt">97,817円・17.7%</span></div>
+              <div class="track"><div class="fill" style="width:17.7%"></div></div>
+            </div>
+            <div class="breakdown-row">
+              <div class="br-top"><span class="br-name">資本金</span><span class="br-amt">100,000円・18.1%</span></div>
+              <div class="track"><div class="fill" style="width:18.1%"></div></div>
+            </div>
+            <div class="breakdown-row">
+              <div class="br-top"><span class="br-name">利益剰余金</span><span class="br-amt">355,574円・64.2%</span></div>
+              <div class="track"><div class="fill" style="width:64.2%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>決算・株主総会の進み具合</h3>
+      <div class="stepper">
+        <div class="step done"><div class="step-dot">1</div><div class="step-label">決算書作成・監査 依頼送信</div><div class="step-date">9/2 完了</div></div>
+        <div class="step active"><div class="step-dot">2</div><div class="step-label">返信フォロー</div><div class="step-date">目安 9/8</div></div>
+        <div class="step active"><div class="step-dot">3</div><div class="step-label">登記役員4名 連絡先確認</div><div class="step-date">氏名は判明済み</div></div>
+        <div class="step"><div class="step-dot">4</div><div class="step-label">決算税務申告</div><div class="step-date">期限 9/30</div></div>
+        <div class="step"><div class="step-dot">5</div><div class="step-label">株主総会 日程・会場確定</div><div class="step-date">目安 9/15</div></div>
+        <div class="step"><div class="step-dot">6</div><div class="step-label">招集通知 発送</div><div class="step-date">未着手</div></div>
+        <div class="step"><div class="step-dot">7</div><div class="step-label">株主総会 開催</div><div class="step-date">10月中(学校内)</div></div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="projects">
+    <div class="section-head">
+      <div class="num">03 / プロジェクト管理</div>
+      <h2>現在動いているプロジェクト・受注実績</h2>
+      <p>受注実績・進行中の売上案件と、現在動いている社内プロジェクトを1つに統合。2026年9月時点で進行中・予定が入っている案件、および受注実績を掲載(不採用案件は含めていない)。</p>
+    </div>
+
+    <div class="card">
+      <h3>受注実績・進行中の売上案件</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>案件</th><th>依頼元</th><th>金額</th><th>責任者・担当者</th><th>状況</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>浅口市サッカー協会 マスコット作成</td>
+              <td>松山高校 岡野副校長</td>
+              <td class="num">2万円</td>
+              <td>社内担当・責任者:要確認</td>
+              <td><span class="badge ok">受注決定</span></td>
+            </tr>
+            <tr>
+              <td>「魚富」パッケージデザイン(鮎の甘露煮 弁当パッケージ)</td>
+              <td>地域事業者</td>
+              <td class="num">要確認</td>
+              <td>社内担当・責任者:要確認</td>
+              <td><span class="badge neutral">完了・金額未記録</span></td>
+            </tr>
+            <tr>
+              <td>高梁市図書館マルシェ(3/14) 企画運営委託</td>
+              <td>高梁市図書館</td>
+              <td class="num">140,240円</td>
+              <td>社内担当・責任者:要確認</td>
+              <td><span class="badge ok">完了</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pj-group">
+      <h3>事業案件(R8年度・4本柱)</h3>
+      <div class="pj-list">
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">ふきやねこグッズ販売</div>
+            <div class="desc">地域デザイン研究所(卒業生2名)制作の日本遺産認定商品。販売・お金の管理をJONAN-HDへ移管中。天満屋とのコラボ・秋の東京販売フェア構想あり。</div>
+          </div>
+          <div class="right"><span class="badge warn">進行中</span></div>
+        </div>
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">大崎上島レモネードコラボ(城南レモネード・シロップ開発PJ)</div>
+            <div class="desc">広島県立大崎海星高校と連携。保健委員会が「スタンド」、JONAN-HDが「シロップ」の製造販売を担う二段構えモデル。</div>
+          </div>
+          <div class="right"><span class="badge warn">進行中</span></div>
+        </div>
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">システム・アプリ開発</div>
+            <div class="desc">生成AIを活用し、校内・地域に役立つアプリを開発。</div>
+          </div>
+          <div class="right"><span class="badge warn">進行中</span></div>
+        </div>
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">広報発信</div>
+            <div class="desc">会社・活動の広報発信を継続実施。</div>
+          </div>
+          <div class="right"><span class="badge neutral">継続中</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pj-group">
+      <h3>その他の外部依頼案件(進行中・金額未確定)</h3>
+      <div class="pj-list">
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">市役所テラス 看板リニューアル</div>
+            <div class="desc">進行中。詳細(締切)・責任者・担当者は要確認。</div>
+          </div>
+          <div class="right"><span class="badge neutral">詳細要確認</span></div>
+        </div>
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">スタンプラリー</div>
+            <div class="desc">進行中。詳細(締切)・責任者・担当者は要確認。</div>
+          </div>
+          <div class="right"><span class="badge neutral">詳細要確認</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pj-group">
+      <h3>イベント出展・渉外</h3>
+      <div class="pj-list">
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">岡山県商工会議所青年部フォーラム</div>
+            <div class="desc">高梁市で開催。運営補助・司会・ブース出店で参加。</div>
+          </div>
+          <div class="right"><span class="badge warn">予定</span><div class="when">9/12(土)</div></div>
+        </div>
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">第20回 岡山県しんきん合同ビジネス交流会</div>
+            <div class="desc">10:00〜16:30。公欠扱い、3〜4名想定でブース出店・商談交流。</div>
+          </div>
+          <div class="right"><span class="badge warn">予定</span><div class="when">9/15(火)</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pj-group">
+      <h3>視察・見学対応</h3>
+      <div class="pj-list">
+        <div class="pj-item">
+          <div class="left"><div class="title">三重県・兵庫県からの視察</div></div>
+          <div class="right"><div class="when">9/11(金)</div></div>
+        </div>
+        <div class="pj-item">
+          <div class="left"><div class="title">和歌山県 紀之川中学校の視察</div></div>
+          <div class="right"><div class="when">9/16(水)</div></div>
+        </div>
+        <div class="pj-item">
+          <div class="left"><div class="title">大阪府立豊岡高校 能勢分校</div><div class="desc">教員1名+生徒10名。授業見学+JONAN-HD生徒との交流。</div></div>
+          <div class="right"><div class="when">9/30(水)</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pj-group">
+      <h3>決算・株主総会</h3>
+      <div class="pj-list">
+        <div class="pj-item">
+          <div class="left"><div class="title">2026年度 決算税務申告</div><div class="desc">決算書作成・監査は依頼済み、返信待ち。</div></div>
+          <div class="right"><span class="badge warn">進行中</span><div class="when">期限 9/30</div></div>
+        </div>
+        <div class="pj-item">
+          <div class="left"><div class="title">株主総会</div><div class="desc">日程・会場は未確定。学校内・生徒運営で実施予定。</div></div>
+          <div class="right"><span class="badge neutral">準備中</span><div class="when">10月中</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:16px;">
+      <strong>プロジェクト管理まわりの未確認事項:</strong>
+      「魚富」パッケージデザイン・図書館マルシェの正式な受注金額が未記録。それぞれの社内担当・責任者も未確認。外部依頼で契約書の締結が後回しになりがちな課題もあり、料金表・契約書テンプレートの整備が次の課題。
+    </div>
+  </section>
+
+  <section id="dept-tasks">
+    <div class="section-head">
+      <div class="num">04 / 部署ごとの業務管理</div>
+      <h2>高校生チーム 部署別タスクと進捗</h2>
+      <p>各部署が実際に動かしている業務を、わかっている範囲でタスク単位に整理。担当生徒名は多くの部署でまだ未確認。</p>
+    </div>
+
+    <div class="pj-group">
+      <h3>営業部</h3>
+      <div class="pj-list">
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">地元事業者への営業活動</div>
+            <div class="desc">8/7・9/2に実施。担当生徒:要確認。</div>
+          </div>
+          <div class="right"><span class="badge ok">完了</span></div>
+        </div>
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">浅口市サッカー協会 マスコット案件 対応</div>
+            <div class="desc">受注決定(2万円)。納期・体制・デザイン要望はこれから詰める。担当生徒・責任者:要確認。</div>
+          </div>
+          <div class="right"><span class="badge warn">進行中</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pj-group">
+      <h3>広報部</h3>
+      <div class="pj-list">
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">会社ロゴ制作</div>
+            <div class="desc">12案の中から採用ロゴを決定済み。担当生徒:要確認。</div>
+          </div>
+          <div class="right"><span class="badge ok">完了</span></div>
+        </div>
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">広報発信</div>
+            <div class="desc">会社・活動の広報発信を継続実施。担当生徒:要確認。</div>
+          </div>
+          <div class="right"><span class="badge neutral">継続中</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pj-group">
+      <h3>テクノロジー&イノベーション推進部</h3>
+      <div class="pj-list">
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">生成AIアプリ開発</div>
+            <div class="desc">校内・地域に役立つアプリを生成AIを活用して開発中。担当生徒:要確認。</div>
+          </div>
+          <div class="right"><span class="badge warn">進行中</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pj-group">
+      <h3>経営企画部・経理部・監査(仮)</h3>
+      <div class="pj-list">
+        <div class="pj-item">
+          <div class="left">
+            <div class="title">タスク・担当生徒 要確認</div>
+            <div class="desc">現時点で具体的な業務内容・担当生徒名を確認できていない3部署。次回ヒアリングで確認予定。</div>
+          </div>
+          <div class="right"><span class="badge neutral">要確認</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="org">
+    <div class="section-head">
+      <div class="num">05 / 参考:財務設計・組織図</div>
+      <h2>財務設計と組織体制(参考)</h2>
+      <p>会社設立時に設計した財務の骨組みと、高校生CEO・COOの下に5部署を置く組織体制。日常的な確認頻度は低いため、ページ最下部に参考として掲載。</p>
+    </div>
+
+    <div class="card">
+      <h3>財務設計</h3>
+      <div class="kpi-row" style="margin-bottom:18px;">
+        <div class="kpi">
+          <div class="label">資本金</div>
+          <div class="value">10万円</div>
+          <div class="sub">1株1,000円 × 100株</div>
+        </div>
+        <div class="kpi">
+          <div class="label">運転資金目標(年間)</div>
+          <div class="value">25〜30万円</div>
+          <div class="sub">最低限の会社継続ライン</div>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <tbody>
+            <tr><td style="width:32%">会社登記費用</td><td>約25〜30万円(会社発起人が負担)</td></tr>
+            <tr><td>資本金</td><td>初期10万円で登記</td></tr>
+            <tr><td>株式構成</td><td>1株1,000円(案)、資本金10万円=100株発行。発起人4名が各25株ずつ(2.5万円ずつ出資)</td></tr>
+            <tr><td>役員報酬</td><td>設立段階では無報酬</td></tr>
+            <tr><td>会社拠点</td><td>高梁城南高校内(JonaLab)</td></tr>
+            <tr><td>活動資金(原資)</td><td>地域から支援・調達</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>組織図(高校生 会社経営チーム)</h3>
+      <p style="font-size:12.5px;color:var(--text-muted);margin:-4px 0 14px;">高校生CEO・COOの下に5部署を置く体制。各部署の担当生徒名はまだ未確認だが、営業部・広報部にはすでに実績がある。</p>
+      <figure class="orgchart-fig">
+        <svg viewBox="0 0 1000 400" role="img" aria-label="高校生CEOの下に高校生COOが置かれ、その下に経営企画部・営業部・広報部・経理部・テクノロジー&イノベーション推進部の5部署がぶら下がる組織図。CEOの並列に監査(仮)が置かれる。">
+          <!-- CEO -->
+          <rect class="node-lead" x="390" y="18" width="220" height="50" rx="8"></rect>
+          <text class="lead title" x="500" y="48" text-anchor="middle" font-size="15">高校生 CEO</text>
+
+          <!-- 監査(仮) branch -->
+          <line x1="610" y1="43" x2="760" y2="43"></line>
+          <polygon class="arrow" points="760,43 750,38 750,48"></polygon>
+          <rect class="node-audit" x="760" y="18" width="150" height="50" rx="8"></rect>
+          <text class="title" x="835" y="43" text-anchor="middle" font-size="13">監査(仮)</text>
+          <text class="note" x="835" y="59" text-anchor="middle">CEOと並列設置</text>
+
+          <!-- CEO -> COO -->
+          <line x1="500" y1="68" x2="500" y2="118"></line>
+          <polygon class="arrow" points="500,118 495,108 505,108"></polygon>
+
+          <!-- COO -->
+          <rect class="node-lead" x="390" y="118" width="220" height="50" rx="8"></rect>
+          <text class="lead title" x="500" y="148" text-anchor="middle" font-size="15">高校生 COO</text>
+
+          <!-- COO -> branch bar -->
+          <line x1="500" y1="168" x2="500" y2="210"></line>
+          <!-- branch bar -->
+          <line x1="130" y1="210" x2="870" y2="210"></line>
+          <!-- stubs to each dept -->
+          <line x1="130" y1="210" x2="130" y2="248"></line>
+          <line x1="315" y1="210" x2="315" y2="248"></line>
+          <line x1="500" y1="210" x2="500" y2="248"></line>
+          <line x1="685" y1="210" x2="685" y2="248"></line>
+          <line x1="870" y1="210" x2="870" y2="248"></line>
+
+          <!-- dept boxes -->
+          <rect x="45" y="248" width="170" height="110" rx="8"></rect>
+          <text class="title" x="130" y="274" text-anchor="middle" font-size="13">経営企画部</text>
+          <text class="note" x="130" y="296" text-anchor="middle">担当生徒:要確認</text>
+
+          <rect x="230" y="248" width="170" height="110" rx="8"></rect>
+          <text class="title" x="315" y="274" text-anchor="middle" font-size="13">営業部</text>
+          <text class="note" x="315" y="296" text-anchor="middle">実績あり</text>
+          <text class="note" x="315" y="312" text-anchor="middle">地元事業者への</text>
+          <text class="note" x="315" y="326" text-anchor="middle">営業活動(8/7・9/2)</text>
+
+          <rect x="415" y="248" width="170" height="110" rx="8"></rect>
+          <text class="title" x="500" y="274" text-anchor="middle" font-size="13">広報部</text>
+          <text class="note" x="500" y="296" text-anchor="middle">実績あり</text>
+          <text class="note" x="500" y="312" text-anchor="middle">ロゴ制作</text>
+          <text class="note" x="500" y="326" text-anchor="middle">(12案→採用決定)</text>
+
+          <rect x="600" y="248" width="170" height="110" rx="8"></rect>
+          <text class="title" x="685" y="274" text-anchor="middle" font-size="13">経理部</text>
+          <text class="note" x="685" y="296" text-anchor="middle">担当生徒:要確認</text>
+
+          <rect x="785" y="248" width="170" height="110" rx="8"></rect>
+          <text class="title" x="870" y="269" text-anchor="middle" font-size="12.5">テクノロジー&</text>
+          <text class="title" x="870" y="285" text-anchor="middle" font-size="12.5">イノベーション推進部</text>
+          <text class="note" x="870" y="307" text-anchor="middle">実績あり</text>
+          <text class="note" x="870" y="323" text-anchor="middle">生成AIで校内・</text>
+          <text class="note" x="870" y="337" text-anchor="middle">地域向けアプリ開発</text>
+        </svg>
+        <figcaption>高校生CEO→COOの下に5部署が並ぶ体制。営業部・広報部・テクノロジー&イノベーション推進部にはすでに活動実績があるが、各部署の担当生徒名は未確認。</figcaption>
+      </figure>
+    </div>
+
+    <div class="note-box">
+      <strong>運営を支える校内会社創業チーム:</strong>
+      生徒代表(執行役COO)・執行役CXO×2・教員2名で構成。生徒の各企画プロジェクトを「◯科PJT」「総探◯班PJT」「◯◯部PJT」「有志◯◯PJT」のように会社の事業部・カンパニーに見立てて運用している。
+    </div>
+  </section>
+
+  <footer class="page">
+    <div>このページは業務整理の途中経過(たたき台)。以下は主な未確認事項:</div>
+    <ul>
+      <li>高校生校内組織(CEO/COO/各部)の実際の担当生徒名</li>
+      <li>「魚富」パッケージデザイン案件の正式な受注金額、料金表の整備状況</li>
+      <li>契約書テンプレートの整備(外部依頼のたびに締結が後回しになっている課題)</li>
+      <li>マスコット作成案件の納期・体制・デザイン要望</li>
+      <li>登記役員4名(横山・松本・三宅・中山)の連絡先、株主総会の日程・会場</li>
+      <li>「営業推進費87,264円」(6/22版で新規計上)の内容確認</li>
+    </ul>
+    <div style="margin-top:14px;">出所:社内共有文/公式サイト/「R8新メンバー用 会社活動説明資料」/コンソーシアム構成名簿・会議調整xlsx/PLBS残高試算表(2026.1.22版・2026.6.22版)(横山弘毅・AI秘書室にて整理)</div>
+  </footer>
+
+</div>
+
+</body></html>
