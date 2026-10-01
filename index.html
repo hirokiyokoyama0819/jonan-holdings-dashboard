@@ -339,7 +339,7 @@
     <h1><span style="white-space:nowrap">JONANホールディングス</span><wbr><span style="white-space:nowrap">株式会社</span></h1>
     <div class="dash-title">業績＆活動ダッシュボード</div>
     <div class="meta-row">
-      <span>更新日:2026年9月28日</span>
+      <span>更新日:2026年10月1日</span>
       <span>作成:横山弘毅</span>
       <span>状態:業務整理中・現在進行中の項目のみ掲載</span>
     </div>
@@ -352,7 +352,7 @@
     <div class="section-head">
       <div class="num">01 / 業績管理</div>
       <h2>収支サマリー ― 第1期(確定)・第2期(進行中)</h2>
-      <p>2026年7月31日締めの第1期は決算仕訳込みの確定残高試算表(処理日:2026年9月9日)、2026年8月1日開始の第2期は経理未集計のため現時点で判明している数値のみを分けて掲載。詳細な財務状況は次の項目を参照。</p>
+      <p>2026年7月31日締めの第1期は決算仕訳込みの確定残高試算表(処理日:2026年9月9日)、2026年8月1日開始の第2期は収支台帳(Googleスプレッドシート)の集計を別枠で、損益計算書と同じ形で掲載。詳細な財務状況は次の項目を参照。</p>
     </div>
 
     <div class="period-head">第1期(確定・2025年9月8日〜2026年7月31日) <span class="badge ok">決算仕訳込み確定</span></div>
@@ -506,24 +506,68 @@
       本表が第1期の確定値。正式な決算書・税務申告(期限9/30)の内容と相違がないか、届き次第照合する。
     </div>
 
-    <div class="period-head">第2期(進行中・2026年8月1日〜) <span class="badge warn">経理未集計・判明分のみ</span></div>
+    <div class="period-head">第2期(進行中・2026年8月1日〜2027年7月31日) <span class="badge warn">集計中・2026年10月1日時点</span></div>
 
     <div class="card">
-      <h3>第2期 収支状況(現時点で判明している分)</h3>
-      <div class="kpi-row" style="margin-bottom:16px;">
-        <div class="kpi">
-          <div class="label">売上高(判明分)</div>
-          <div class="value">23,300円</div>
-          <div class="sub">「失敗シール」販売実績(9/12)</div>
+      <h3>第2期 収支(損益計算書の形・累計)</h3>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="fs-label">営業収入(売上高)</div>
+          <div class="fs-val">23,300円</div>
+        </div>
+        <div class="flow-op">−</div>
+        <div class="flow-step">
+          <div class="fs-label">営業支出(原価+販管費)</div>
+          <div class="fs-val">14,730円</div>
+        </div>
+        <div class="flow-op">=</div>
+        <div class="flow-step ok">
+          <div class="fs-label">営業損益</div>
+          <div class="fs-val">+8,570円</div>
+        </div>
+        <div class="flow-op">+</div>
+        <div class="flow-step">
+          <div class="fs-label">営業外収支(寄付など)</div>
+          <div class="fs-val">0円</div>
+        </div>
+        <div class="flow-op">=</div>
+        <div class="flow-step lead">
+          <div class="fs-label">経常損益</div>
+          <div class="fs-val">+8,570円</div>
         </div>
       </div>
-      <div class="breakdown">
-        <div class="breakdown-row">
-          <div class="br-top"><span class="br-name">高梁商工会議所青年部(YEG) 岡山県青年部大会「失敗シール」販売(9/12)</span><span class="br-amt">23,300円・100%</span></div>
-          <div class="track"><div class="fill" style="width:100%"></div></div>
+    </div>
+
+    <div class="card">
+      <h3>第2期 内訳</h3>
+      <div class="bs-cols">
+        <div class="bs-col">
+          <h4>営業収入 内訳</h4>
+          <div class="col-total">23,300円</div>
+          <div class="breakdown">
+            <div class="breakdown-row">
+              <div class="br-top"><span class="br-name">「失敗シール」販売(9/12 高梁YEG 岡山県青年部大会) <span class="badge warn">入金確認待ち</span></span><span class="br-amt">23,300円・100%</span></div>
+              <div class="track"><div class="fill" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="bs-col">
+          <h4>営業支出(販管費) 内訳</h4>
+          <div class="col-total">14,730円</div>
+          <div class="breakdown">
+            <div class="breakdown-row">
+              <div class="br-top"><span class="br-name">旅費交通費:天満屋ふきやねこ販売(8/22・2件)</span><span class="br-amt">9,990円</span></div>
+              <div class="track"><div class="fill" style="width:67.8%"></div></div>
+            </div>
+            <div class="breakdown-row">
+              <div class="br-top"><span class="br-name">旅費交通費:岡山信金フォーラム出展(9/15)</span><span class="br-amt">4,740円</span></div>
+              <div class="track"><div class="fill" style="width:32.2%"></div></div>
+            </div>
+          </div>
+          <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">交通費3件(14,730円)は生徒の立替で、精算はまだ。</p>
         </div>
       </div>
-      <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">第2期(2026年8月1日〜)はまだ経理入力・集計前のため、経費(消耗品費・営業推進費等)や経常利益はここには出せない。現時点で判明している売上のみ随時追記し、経理部の入力が進み次第、第1期と同じ形式(滝グラフ・内訳)に拡張する。</p>
+      <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">月別:8月 ▲9,990円 / 9月 +18,560円(累計 +8,570円)。第1期分の法人税等145,400円(9/30納付)は前期の税金のため、第2期の損益には含めていない。数値は「JONAN-HD 第2期 収支台帳」(Googleスプレッドシート)の集計タブと連動して毎週更新する。金額は税込(免税事業者)。</p>
     </div>
   </section>
 
